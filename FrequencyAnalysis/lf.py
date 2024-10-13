@@ -1,3 +1,6 @@
+from Text import Text
+
+
 def get_letter_frequencies(text):
     letter_frequencies = {}
     for letter in text:
@@ -77,7 +80,9 @@ def analyse_frequencies(text):
 
 
 def sort_by_frequency(frequencies):
-    return dict(sorted(frequencies.items(), key=lambda x: x[1], reverse=True))
+    sorted_frequencies = dict(
+        sorted(frequencies.items(), key=lambda x: x[1], reverse=True))
+    return dict(list(sorted_frequencies.items())[:20])
 
 
 def match_by_frequencies(first_alphabet_frequency, second_alphabet_frequency):
@@ -98,29 +103,8 @@ def match_analysed_frequencies(first_alphabet_frequency, second_alphabet_frequen
 
 
 def translate_text(text, origin_frequency_analysis, foreign_frequency_analysis):
-    translation = match_analysed_frequencies(
+    matching_frequencies = match_analysed_frequencies(
         origin_frequency_analysis, foreign_frequency_analysis)
-    words = text.split()
-    for i, word in enumerate(words):
-        words[i] = translate_word(word, translation)
-    # return ''.join(words)
-
-
-def match_ngram(word, translation, ngram):
-    if len(word) < ngram:
-        raise ValueError("Word is shorter than the number of ngram")
-    result = ""
-
-
-def translate_word(word, translation):
-    translation_keys_intervals = {
-        'quadgrams': 4,
-        'trigrams': 3,
-        'bigrams': 2,
-        'letters': 1,
-    }
-    translation_keys = list(translation_keys_intervals.keys())
-    for translation_phase in translation_keys:
-        interval = translation_keys_intervals[translation_phase]
-        print(translation_phase, interval)
-        break
+    cypher_text = Text(text)
+    print(cypher_text)
+    return cypher_text
