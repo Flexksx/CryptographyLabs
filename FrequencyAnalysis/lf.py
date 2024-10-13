@@ -1,4 +1,3 @@
-from Text import Text
 
 
 def get_letter_frequencies(text):
@@ -101,10 +100,3 @@ def match_analysed_frequencies(first_alphabet_frequency, second_alphabet_frequen
             first_alphabet_frequency[part], second_alphabet_frequency[part])
     return result
 
-
-def translate_text(text, origin_frequency_analysis, foreign_frequency_analysis):
-    matching_frequencies = match_analysed_frequencies(
-        origin_frequency_analysis, foreign_frequency_analysis)
-    cypher_text = Text(text)
-    print(cypher_text)
-    return cypher_text

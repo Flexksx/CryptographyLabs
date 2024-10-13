@@ -99,7 +99,7 @@ english_quadrigraphs_frequencies: dict = {
     'MENT': 0.223347
 }
 
-english_frequency_analysis = {
+ENGLISH_FREQUENCY_ANALYSIS = {
     "letters": english_letters_frequencies,
     "bigrams": english_digraphs_frequencies,
     "trigrams": english_trigraphs_frequencies,
