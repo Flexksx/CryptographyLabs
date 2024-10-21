@@ -99,7 +99,38 @@ english_quadrigraphs_frequencies: dict = {
     'MENT': 0.223347
 }
 
+english_first_letter_frequencies = {
+    "T": 16.0,
+    "A": 11.7,
+    "O": 7.6,
+    "I": 7.3,
+    "S": 6.7,
+    "W": 5.5,
+    "C": 5.2,
+    "B": 4.4,
+    "P": 4.3,
+    "H": 4.2,
+    "F": 4.0,
+    "M": 3.8,
+    "D": 3.2,
+    "E": 2.8,
+    "R": 2.8,
+    "L": 2.4,
+    "N": 2.3,
+    "G": 1.6,
+    "U": 1.2,
+    "K": 0.86,
+    "V": 0.82,
+    "Y": 0.76,
+    "J": 0.51,
+    "Q": 0.22,
+    "X": 0.045,
+    "Z": 0.045
+}
+
+
 ENGLISH_FREQUENCY_ANALYSIS = {
+    "first_letters": english_first_letter_frequencies,
     "letters": english_letters_frequencies,
     "bigrams": english_digraphs_frequencies,
     "trigrams": english_trigraphs_frequencies,

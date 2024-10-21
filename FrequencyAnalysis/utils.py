@@ -1,26 +1,8 @@
-import pandas as pd
-import altair as alt
-import streamlit as st
+from ENGLISH import ENGLISH_FREQUENCY_ANALYSIS
 
 
-def get_frequencies_dict(language_frequencies):
-    analysis_subjects = ['letters', 'bigrams', 'trigrams', 'quadgrams']
-    analysis_frequencies = []
-    for subject in analysis_subjects:
-        title = f'{subject.capitalize()}'
-        df = pd.DataFrame(
-            language_frequencies[subject].items(), columns=[title, 'Frequency']
-        ).sort_values(by='Frequency', ascending=False).reset_index(drop=True)
-        analysis_frequencies.append({'title': title, 'data': df})
-    return analysis_frequencies
-
-
-def show_mappings_in_expander(matches_dict):
-    titles = ['letters', 'bigrams', 'trigrams', 'quadgrams']
-    for title in titles:
-        matches = matches_dict[title]
-        expander = st.expander(f'{title.capitalize()} Mapping')
-        df = pd.DataFrame(list(matches.items()), columns=[
-            "Cipher", "Decrypted"]).T
-        expander.table(df)
-    return expander
+def get_nr_of_key_in_english(key: str = None):
+    if key is None:
+        raise ValueError(
+            "You should specify what key you want to get the number of.")
+    return len(list(ENGLISH_FREQUENCY_ANALYSIS[key].keys()))
