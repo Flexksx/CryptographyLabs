@@ -12,42 +12,56 @@ def translate(text: str, matches: dict) -> str:
     return translated_text
 
 
-def map_strings_by_frequency(dict1: dict[str, dict[str, float]], dict2: dict[str, dict[str, float]]) -> dict[str, str]:
+def map_strings_by_frequency(dict1: dict[str, float], dict2: dict[str, dict[str, float]]) -> list[dict]:
     """Match the most frequent items between two dictionaries.
 
     Args:
-        dict1 (dict[str, dict[str, float]]): The first dictionary with frequency details.
+        dict1 (dict[str, float]): The first dictionary with frequency details.
         dict2 (dict[str, dict[str, float]]): The second dictionary with frequency details.
 
     Returns:
-        dict[str, str]: A mapping from items in dict1 to items in dict2 based on frequency.
+        list[dict]: A list of match objects containing source and target details.
     """
     # Debug: print the input dictionaries
     print("dict1:", dict1)
     print("dict2:", dict2)
 
-    # Extract and sort items from dict1 and dict2 by frequency
+    # Convert dict1 to the required format
+    dict1_converted = {
+        key: {"frequency": value} for key, value in dict1.items()
+    }
+
+    # Extract and sort items from dict1_converted and dict2 by frequency
     sorted_dict1 = sorted(
-        dict1.items(),
-        key=lambda item: item[1]['frequency'] if isinstance(
-            item[1], dict) else 0,
+        dict1_converted.items(),
+        key=lambda item: item[1]['frequency'],
         reverse=True
     )
     sorted_dict2 = sorted(
         dict2.items(),
-        key=lambda item: item[1]['frequency'] if isinstance(
-            item[1], dict) else 0,
+        key=lambda item: item[1]['frequency'],
         reverse=True
     )
 
-    # Create the mapping dictionary
-    mapping = {}
+    # Create the matches list
+    matches = []
     min_length = min(len(sorted_dict1), len(sorted_dict2))
 
     for i in range(min_length):
-        key_from_dict1 = sorted_dict1[i][0]  # Get the string from dict1
-        # Get the corresponding string from dict2
-        key_from_dict2 = sorted_dict2[i][0]
-        mapping[key_from_dict1] = key_from_dict2
+        source_item = sorted_dict1[i]
+        target_item = sorted_dict2[i]
 
-    return mapping
+        match = {
+            "source": {
+                "value": source_item[0],  # Get the string from dict1
+                "frequency": source_item[1]['frequency']
+            },
+            "target": {
+                "value": target_item[0],  # Get the string from dict2
+                "frequency": target_item[1]['frequency']
+            }
+        }
+
+        matches.append(match)
+
+    return matches

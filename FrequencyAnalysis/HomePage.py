@@ -43,11 +43,21 @@ trigrams_match = lf.map_strings_by_frequency(
     ENGLISH_FREQUENCY_ANALYSIS['trigrams'], trigrams_frequencies)
 quadgrams_match = lf.map_strings_by_frequency(
     ENGLISH_FREQUENCY_ANALYSIS['quadgrams'], quadgrams_frequencies)
+# Create a DataFrame from the matches
+data = {
+    'Cypher String': [match['source']['value'] for match in letters_match],
+    'Cypher String Frequency': [match['source']['frequency'] for match in letters_match],
+    'English String': [match['target']['value'] for match in letters_match],
+    'English String Frequency': [match['target']['frequency'] for match in letters_match]
+}
 
-combined_matches = {**letters_match, **bigrams_match,
-                    **trigrams_match, **quadgrams_match}
+df = pd.DataFrame(data)
+
+# Display the DataFrame in Streamlit
+st.title("Frequency Analysis")
+st.dataframe(df)
 
 
-translated_text = lf.translate(cypher_text, combined_matches)
-st.write("Translated text:")
-st.write(translated_text)
+# translated_text = lf.translate(cypher_text, combined_matches)
+# st.write("Decyphered text:")
+# st.write(translated_text)
