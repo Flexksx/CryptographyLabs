@@ -57,7 +57,8 @@ def get_word_parts_frequencies(text: str = None, nr_of_letters: int = None, max_
         )
 
     word_part_info = {
-        part: {'count': count, 'frequency': count / total_parts}
+        part: {'count': count, 'frequency': round(
+            (count / total_parts)*100, 2)}
         for part, count in word_part_counts.items()
     }
 

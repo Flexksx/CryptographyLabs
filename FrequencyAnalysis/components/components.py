@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from .show_plot_expander import show_plot_expander
 from .create_frequency_bar_chart import create_frequency_bar_chart
+from .editable_match_table import show_editable_match_table
 
 
 def display_frequencies(frequency_data, title="Frequencies", container=None):

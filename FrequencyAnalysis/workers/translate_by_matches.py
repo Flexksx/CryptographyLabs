@@ -2,12 +2,31 @@ import re
 
 
 def translate(text: str, matches: dict) -> str:
-    # Create a regex pattern that matches any of the keys
+    # Create a regex pattern that matches any of the keys, sorted by length
     pattern = re.compile(
-        '|'.join(map(re.escape, sorted(matches.keys(), key=len, reverse=True))))
+        '|'.join(map(re.escape, sorted(matches.keys(), key=len, reverse=True))),
+        re.IGNORECASE  # Make the regex case-insensitive
+    )
 
-    # Use a lambda function to replace the matched keys with their corresponding values
-    translated_text = pattern.sub(lambda match: matches[match.group(0)], text)
+    def replace_case_sensitive(match):
+        # Get the matched string
+        matched_str = match.group(0)
+
+        # Get the corresponding replacement from the matches dictionary
+        replacement = matches[matched_str.upper()]
+
+        # Check the case of the matched string and return the replacement in the same case
+        if matched_str.isupper():
+            return replacement.upper()
+        elif matched_str.islower():
+            return replacement.lower()
+        elif matched_str[0].isupper():
+            return replacement.capitalize()
+        else:
+            return replacement  # return as is if mixed or no specific case
+
+    # Use the pattern to substitute the matched strings with their replacements
+    translated_text = pattern.sub(replace_case_sensitive, text)
 
     return translated_text
 
@@ -22,9 +41,6 @@ def map_strings_by_frequency(dict1: dict[str, float], dict2: dict[str, dict[str,
     Returns:
         list[dict]: A list of match objects containing source and target details.
     """
-    # Debug: print the input dictionaries
-    print("dict1:", dict1)
-    print("dict2:", dict2)
 
     # Convert dict1 to the required format
     dict1_converted = {
