@@ -15,15 +15,17 @@ def translate(text: str, matches: dict) -> str:
         # Get the corresponding replacement from the matches dictionary
         replacement = matches[matched_str.upper()]
 
-        # Check the case of the matched string and return the replacement in the same case
+        # Check the case of the matched string and wrap replacement in HTML to color it
         if matched_str.isupper():
-            return replacement.upper()
+            colored_replacement = f"<span style='color:red;'>{replacement.upper()}</span>"
         elif matched_str.islower():
-            return replacement.lower()
+            colored_replacement = f"<span style='color:red;'>{replacement.lower()}</span>"
         elif matched_str[0].isupper():
-            return replacement.capitalize()
+            colored_replacement = f"<span style='color:red;'>{replacement.capitalize()}</span>"
         else:
-            return replacement  # return as is if mixed or no specific case
+            colored_replacement = f"<span style='color:red;'>{replacement}</span>"
+
+        return colored_replacement
 
     # Use the pattern to substitute the matched strings with their replacements
     translated_text = pattern.sub(replace_case_sensitive, text)

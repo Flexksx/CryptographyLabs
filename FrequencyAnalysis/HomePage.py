@@ -1,4 +1,3 @@
-from fnmatch import translate
 import pandas as pd
 import string
 from collections import Counter
@@ -38,8 +37,10 @@ trigrams_frequencies = lf.get_word_parts_frequencies(
 quadgrams_frequencies = lf.get_word_parts_frequencies(
     text=text_to_decode, nr_of_letters=4, max_parts=nr_of_quadgrams_in_english)
 
-show_plot_expander(first_letters_frequencies, letter_frequencies,
-                   bigrams_frequencies, trigrams_frequencies, quadgrams_frequencies)
+show_plot_expander_toggle = st.toggle("Show plot", False)
+if show_plot_expander_toggle:
+    show_plot_expander(first_letters_frequencies, letter_frequencies,
+                       bigrams_frequencies, trigrams_frequencies, quadgrams_frequencies)
 
 letters_match = lf.map_strings_by_frequency(
     ENGLISH_FREQUENCY_ANALYSIS['letters'], letter_frequencies)
@@ -55,34 +56,28 @@ bigrams_match_table = get_match_table(bigrams_match)
 trigrams_match_table = get_match_table(trigrams_match)
 quadgrams_match_table = get_match_table(quadgrams_match)
 
+match_tables = [letters_match_table, bigrams_match_table,
+                trigrams_match_table, quadgrams_match_table]
+match_tables_titles = ["Letters", "Bigrams", "Trigrams", "Quadgrams"]
 
-matches_columns = st.columns(4)
-updated_quadgrams_match = show_editable_match_table(
-    matches_columns[0],
-    title="Quadgrams",
-    data=quadgrams_match_table)
-updated_trigrams_match = show_editable_match_table(
-    matches_columns[1],
-    title="Trigrams",
-    data=trigrams_match_table)
-updated_bigrams_match = show_editable_match_table(
-    matches_columns[2],
-    title="Bigrams",
-    data=bigrams_match_table)
-updated_letters_match = show_editable_match_table(
-    matches_columns[3],
-    title="Letters",
+
+matches_columns = st.columns(len(match_tables))
+for i in range(len(match_tables)):
+    index = len(match_tables)-1-i
+    show_frequency_match_table(
+        matches_columns[i],
+        title=match_tables_titles[index],
+        data=match_tables[index])
+
+
+letter_replacements = show_letter_cypher_selector(
+    st,
+    title="Select replacements for the foreign letters",
     data=letters_match_table)
 
-# print(updated_letters_match)
-
-combined_matches = {**updated_letters_match, **updated_bigrams_match,
-                    **updated_trigrams_match, **updated_quadgrams_match}
-
-if len(combined_matches) == 0:
+if len(letter_replacements) == 0:
     st.write(cypher_text)
 else:
-    print(combined_matches)
-    translated_text = lf.translate(cypher_text, combined_matches)
-    st.write("Translated text:")
-    st.write(translated_text)
+    print(letter_replacements)
+    translated_text = lf.translate(cypher_text, letter_replacements)
+    st.markdown(translated_text, unsafe_allow_html=True)
