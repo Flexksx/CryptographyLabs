@@ -1,0 +1,12 @@
+{
+  "python.analysis.typeCheckingMode": "off",
+  "python.pythonPath": "/Users/cristiancretu/Documents/UniCode/Cybersecurity-Labs/venv/bin/python3",
+  "python.autoComplete.extraPaths": [
+    "/Users/cristiancretu/Documents/UniCode/Cybersecurity-Labs"
+  ],
+  "editor.formatOnSave": true,
+  "python.analysis.extraPaths": [
+    "/Users/cristiancretu/Documents/UniCode/Cybersecurity-Labs"
+  ],
+  "python.analysis.autoImportCompletions": true
+}
