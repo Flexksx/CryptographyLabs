@@ -39,12 +39,11 @@ class Preparator:
         digraphs = self._split(text)
         return digraphs
 
-    def prepare(self, text):
+    def prepare_text(self, text):
         text = self._uppercase(text)
         text = self._clean(text)
         text = self._substitute(text)
         text = self._separate_digraphs(text)
-        text = ' '.join(text)
         return text
 
     def _remove_duplicate_chars(self, text):
@@ -59,7 +58,3 @@ class Preparator:
         key = self._clean(key)
         key = self._remove_duplicate_chars(key)
         return key
-
-
-preparator = Preparator()
-print(preparator.prepare("Hello, World!"))
