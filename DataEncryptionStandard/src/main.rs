@@ -1,34 +1,19 @@
-use std::io;
+mod des;
 
+use des::key;
+use des::permutation;
+use des::reader;
 fn main() {
-    // Prompt user for input
-    println!("Enter plaintext (max 8 characters):");
+    // Step 1: Use Reader to read input from the user
+    let plaintext = reader::Reader::read_input();
 
-    // Read user input
-    let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read input");
+    println!("Transforming your text: '{plaintext}' input into 64-bit blocks");
+    let blocks = reader::Reader::string_to_blocks(&plaintext);
+    println!("64-bit blocks: {:?}", blocks);
 
-    // Trim newline and limit to 8 characters
-    input = input.trim().to_string();
-    if input.len() > 8 {
-        println!("Input too long! Truncating to 8 characters.");
-        input = input.chars().take(8).collect();
-    }
-
-    println!("Input (plaintext): {}", input);
-
-    let input_block = string_to_block(&input);
-    println!("64-bit block: {:?}", input_block);
-}
-fn string_to_block(input: &str) -> [u8; 8] {
-    let mut block = [0u8; 8];
-    let bytes = input.as_bytes();
-
-    for i in 0..bytes.len() {
-        block[i] = bytes[i];
-    }
-
-    block
+    // Step 3: Generate a key for encryption (dummy for now)
+    let key = key::generate_key();
+    println!("Generated key: {:?}", key);
+    let initial_permutation = permutation::Permutation::get_initial();
+    println!("Initial permutation: {:?}", initial_permutation);
 }
