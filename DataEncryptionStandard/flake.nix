@@ -1,5 +1,5 @@
 {
-  description = "A simple flake for a Rust project with rustup and cargo";
+  description = "A simple flake for a Java project to implement the Data Encryption Standard";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
@@ -18,12 +18,7 @@
         pkgs = import nixpkgs { inherit system; };
       in
       {
-        devShell = pkgs.mkShell {
-          buildInputs = [
-            pkgs.rustup
-            pkgs.cargo
-          ];
-        };
+        devShell = pkgs.mkShell { buildInputs = [ pkgs.openjdk17 ]; };
       }
     );
 }
