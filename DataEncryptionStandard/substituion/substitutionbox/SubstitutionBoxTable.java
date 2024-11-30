@@ -64,4 +64,8 @@ public class SubstitutionBoxTable {
                 return boxes;
         }
 
+        public static int size() {
+                return boxes.length;
+        }
+
 }

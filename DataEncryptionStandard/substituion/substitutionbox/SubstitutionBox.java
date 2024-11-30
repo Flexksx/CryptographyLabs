@@ -20,15 +20,33 @@ public class SubstitutionBox {
     public int substitute(SubstitutionBlock block) {
         int firstBit = block.getFirstBit();
         int lastBit = block.getLastBit();
-        System.out.println("Selecting row of configuration " + firstBit + "xxxx" + lastBit);
-        int row = (block.getFirstBit() << 1) + block.getLastBit();
-        int col = block.getValue() & 0b011110;
-        col >>= 1;
-        System.out.println("Row: " + row + " Col: " + col);
-        return table[row][col];
+        int row = firstBit * 2 + lastBit;
+        int col = block.getMiddleBits();
+        System.out.println("Processing block: " + block.toStringAsInt()
+                + ", bit representation: " + block.toString());
+        System.out.println(
+                "First bit: " + firstBit
+                        + ", last bit: " + lastBit
+                        + ", middle bits value: " + block.getMiddleBits());
+        int substitutedValue = table[row][col];
+        System.out.println("Substituted value: " + substitutedValue);
+        return substitutedValue;
     }
 
     public int substitute(int value) {
         return substitute(new SubstitutionBlock(value));
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table[i].length; j++) {
+                sb.append(table[i][j]).append(" ");
+            }
+            if (i != table.length - 1) {
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 }

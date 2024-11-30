@@ -29,11 +29,19 @@ public class SubstitutionBlock {
         return value & 0b000001;
     }
 
+    public String toStringAsInt() {
+        return Integer.toString(value);
+    }
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (int i = 5; i >= 0; i--) {
             builder.append(getAt(i));
         }
         return builder.toString();
+    }
+
+    public int getMiddleBits() {
+        return (value & 0b011110) >> 1;
     }
 }
