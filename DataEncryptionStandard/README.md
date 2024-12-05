@@ -1,4 +1,5 @@
 # Data Encryption Standard
+## Author: Cretu Cristian, FAF-223
 This assignment focuses on implementing a part of the DES (Data Encryption Standard) encryption algorithm.
 
 ## Task
